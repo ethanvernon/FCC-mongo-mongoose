@@ -12,6 +12,11 @@
 // `mongoose`. Store your **mLab** database URI in the private `.env` file 
 // as `MONGO_URI`. Connect to the database using `mongoose.connect(<Your URI>)`
 
+var mongoose = require('mongoose');
+var mongodb = require('mongodb');
+
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
+
 
 /** # SCHEMAS and MODELS #
 /*  ====================== */
