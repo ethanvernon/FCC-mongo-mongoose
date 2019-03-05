@@ -93,9 +93,11 @@ var Person = mongoose.model('Person', personSchema);
 //    ...do your stuff here...
 // });
 
+
 var createAndSavePerson = function(done) {
   
-  done(null /*, data*/);
+  var Ethan = new Person({ name: 'Ethan', age: 28, favoriteFoods: ['salad','pizza','cereal'] });
+  Ethan.save((err, data) => err ? done(err) : done(null, data));
 
 };
 
@@ -108,11 +110,9 @@ var createAndSavePerson = function(done) {
 // Create many people using `Model.create()`, using the function argument
 // 'arrayOfPeople'.
 
-var createManyPeople = function(arrayOfPeople, done) {
-    
-    done(null/*, data*/);
-    
-};
+var createManyPeople = function(arrayOfPeople, done) {  
+  Person.create(arrayOfPeople, (err, arrayOfPeople) => err ? done(err) : done(null, arrayOfPeople));
+}
 
 /** # C[R]UD part II - READ #
 /*  ========================= */
@@ -125,10 +125,9 @@ var createManyPeople = function(arrayOfPeople, done) {
 // It supports an extremely wide range of search options. Check it in the docs.
 // Use the function argument `personName` as search key.
 
-var findPeopleByName = function(personName, done) {
-  
-  done(null/*, data*/);
-
+var findPeopleByName = function(personName, done) {  
+  var search = {name:personName};
+  Person.find(search, (err, search) => err ? done(err) : done(null, search));
 };
 
 /** 6) Use `Model.findOne()` */
