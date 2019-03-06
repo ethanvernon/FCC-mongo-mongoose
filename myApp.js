@@ -53,7 +53,7 @@ mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
       required: true // Always convert `test` to lowercase
     },
     age: Number,
-    favoriteFoods:   Array
+    favoriteFoods:   [String]
   });
 
 var Person = mongoose.model('Person', personSchema);
@@ -183,11 +183,16 @@ var findPersonById = function(personId, done) {
 // (http://mongoosejs.com/docs/schematypes.html - #Mixed )
 
 var findEditThenSave = function(personId, done) {
-  var foodToAdd = 'hamburger';
-  
-  done(null/*, data*/);
-};
+  var foodToAdd = "hamburger";
+  Person.findById(personId, function(err, data) {
+    if (err) {
+      done(err);
+    }
 
+    data.favoriteFoods.push(foodToAdd);
+    data.save((err, data) => (err ? done(err) : done(null, data)));
+  });
+};
 /** 9) New Update : Use `findOneAndUpdate()` */
 
 // Recent versions of `mongoose` have methods to simplify documents updating.
